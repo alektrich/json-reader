@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { ChangeEvent, useState } from 'react';
 
-function App() {
+const App = ():JSX.Element => {
+  const [files, setFiles] = useState('');
+
+  const handleUpload = (event: ChangeEvent) => {
+    const input = event.target as HTMLInputElement;
+    const file: File = (input.files as FileList)[0];
+    const fileReader = new FileReader();
+    fileReader.readAsText(file, 'UTF-8');
+    fileReader.onload = () => setFiles(fileReader.result as string);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>JSON upload</h1>
+
+      <input type="file" onChange={handleUpload} />
+      <br />
+      {`Json Content: ${files}`}
+    </>
   );
-}
+};
 
 export default App;
