@@ -1,14 +1,15 @@
 import React, { ChangeEvent, useState } from 'react';
+import JsonModel from './models/JsonModel';
 
 const App = ():JSX.Element => {
-  const [files, setFiles] = useState('');
+  const [json, setJson] = useState('');
 
   const handleUpload = (event: ChangeEvent) => {
     const input = event.target as HTMLInputElement;
     const file: File = (input.files as FileList)[0];
     const fileReader = new FileReader();
     fileReader.readAsText(file, 'UTF-8');
-    fileReader.onload = () => setFiles(fileReader.result as string);
+    fileReader.onload = () => setJson(fileReader.result as string);
   };
   return (
     <>
@@ -16,7 +17,7 @@ const App = ():JSX.Element => {
 
       <input type="file" onChange={handleUpload} />
       <br />
-      {`Json Content: ${files}`}
+      {`Json Content: ${json}`}
     </>
   );
 };
