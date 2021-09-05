@@ -3,7 +3,7 @@ import JsonEditor from './JsonEditor';
 import JsonModel from './models/JsonModel';
 
 const App = ():JSX.Element => {
-  const [json, setJson] = useState({});
+  const [json, setJson] = useState([]);
 
   const handleUpload = (event: ChangeEvent) => {
     const input = event.target as HTMLInputElement;
@@ -13,7 +13,10 @@ const App = ():JSX.Element => {
     fileReader.onload = () => setJson(JSON.parse(fileReader.result as string));
   };
 
-  if (Object.keys(json).length === 0) {
+  const isEmptyArray = Array.isArray(json) && !json.length;
+  const isEmptyObject = !Array.isArray(json) && !Object.keys(json).length;
+
+  if (isEmptyArray || isEmptyObject) {
     return (
       <>
         <h1>JSON upload</h1>
@@ -23,7 +26,7 @@ const App = ():JSX.Element => {
   }
 
   return (
-    <JsonEditor json={new JsonModel(json)} />
+    <JsonEditor json={new JsonModel(json)} goBack={() => setJson([])} />
   );
 };
 

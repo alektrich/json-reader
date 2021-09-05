@@ -5,21 +5,25 @@ export type Json = {
 };
 
 export default class JsonModel {
-  json: Json
+  json: Json|Json[]
 
-  constructor(json: Json) {
-    this.json = json;
+  constructor(json: Json|Json[]) {
+    this.json = Array.isArray(json) ? json : [json];
     makeAutoObservable(this);
   }
 
-  getData(): Json {
-    return this.json;
+  getData(): Json[] {
+    return this.json as Json[];
   }
 
-  updateProp(name: string, value: string | number): void {
+  updateProp(name: string, value: string | number, index?: number): void {
     if (name === 'id' || !this.json) {
       return;
     }
-    this.json[name] = value;
+    if (typeof index === 'number') {
+      (this.json as Json[])[index][name] = value;
+    } else {
+      (this.json as Json[])[0][name] = value;
+    }
   }
 }
