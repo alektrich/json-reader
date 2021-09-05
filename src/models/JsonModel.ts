@@ -1,19 +1,23 @@
 import { makeAutoObservable } from 'mobx';
 
-interface Json {
-  [key: string]: any;
-}
+export type Json = {
+  [key: string]: string | number;
+};
 
 export default class JsonModel {
   json: Json
 
-  constructor(json: object) {
+  constructor(json: Json) {
     this.json = json;
     makeAutoObservable(this);
   }
 
-  updateProp(name: string, value: any) {
-    if (name === 'id') {
+  getData(): Json {
+    return this.json;
+  }
+
+  updateProp(name: string, value: string | number): void {
+    if (name === 'id' || !this.json) {
       return;
     }
     this.json[name] = value;

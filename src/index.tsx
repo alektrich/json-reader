@@ -1,24 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-  BrowserRouter as Router,
-  Route,
-} from 'react-router-dom';
 
 import './index.css';
+
+/* eslint-disable react/jsx-props-no-spreading */
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <Route exact path="/">
-        <App />
-      </Route>
-      <Route exact path="/json-editor">
-        Edit
-      </Route>
-    </Router>
+    <App />
   </React.StrictMode>,
   document.getElementById('root'),
 );
