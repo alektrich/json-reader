@@ -29,7 +29,7 @@ const JsonEditor = observer(({ json, goBack } : Props) : JSX.Element => (
       Back
     </Button>
     {json.getData().map((row, index) => (
-      <div key={v4()}>
+      <>
         {
           Object.keys(row).filter((prop: string) => prop !== 'id' && typeof row[prop] !== 'object').map((prop: string) => (
             <div key={prop}>
@@ -39,7 +39,7 @@ const JsonEditor = observer(({ json, goBack } : Props) : JSX.Element => (
           ))
         }
         <Divider variant="middle" style={{ marginTop: '20px' }} />
-      </div>
+      </>
     ))}
   </Box>
 ));
