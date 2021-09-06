@@ -1,6 +1,8 @@
 import React from 'react';
+import { v4 } from 'uuid';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
+import Input from '@material-ui/core/Input';
 import Divider from '@material-ui/core/Divider';
 import { observer } from 'mobx-react-lite';
 import { Json } from './models/JsonModel';
@@ -27,17 +29,17 @@ const JsonEditor = observer(({ json, goBack } : Props) : JSX.Element => (
       Back
     </Button>
     {json.getData().map((row, index) => (
-      <>
+      <div key={v4()}>
         {
           Object.keys(row).filter((prop: string) => prop !== 'id' && typeof row[prop] !== 'object').map((prop: string) => (
             <div key={prop}>
-              <p>{`${prop} ==> ${row[prop]}`}</p>
-              <input type="text" name={prop} value={row[prop]} onChange={(e) => json.updateProp(prop, e.target.value, index)} />
+              <p>{`"${prop}": ${row[prop]}`}</p>
+              <Input type="text" name={prop} value={row[prop]} onChange={(e) => json.updateProp(prop, e.target.value, index)} />
             </div>
           ))
         }
-        <Divider variant="middle" />
-      </>
+        <Divider variant="middle" style={{ marginTop: '20px' }} />
+      </div>
     ))}
   </Box>
 ));
