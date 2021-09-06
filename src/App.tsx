@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
+import Button from '@material-ui/core/Button';
 import JsonEditor from './JsonEditor';
 import JsonModel from './models/JsonModel';
 
@@ -19,8 +20,19 @@ const App = ():JSX.Element => {
   if (isEmptyArray || isEmptyObject) {
     return (
       <>
-        <h1>JSON upload</h1>
-        <input type="file" onChange={handleUpload} />
+        {/* <h1>JSON upload</h1> */}
+        {/* <input type="file" onChange={handleUpload} /> */}
+        <Button
+          variant="contained"
+          component="label"
+        >
+          Upload Json File
+          <input
+            type="file"
+            hidden
+            onChange={handleUpload}
+          />
+        </Button>
       </>
     );
   }

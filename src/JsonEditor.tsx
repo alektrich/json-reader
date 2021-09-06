@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
 import { observer } from 'mobx-react-lite';
 import { Json } from './models/JsonModel';
 
@@ -14,7 +15,9 @@ export type Props = {
 
 const JsonEditor = observer(({ json, goBack } : Props) : JSX.Element => (
   <>
-    <button type="button" onClick={goBack}>Back</button>
+    <Button variant="contained" color="primary" onClick={goBack}>
+      Back
+    </Button>
     {json.getData().map((row, index) => Object.keys(row).filter((prop) => prop !== 'id' && typeof row[prop] !== 'object').map((prop) => (
       <>
         <p>{`${prop} ==> ${row[prop]}`}</p>
