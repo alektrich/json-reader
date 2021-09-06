@@ -1,5 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+import Divider from '@material-ui/core/Divider';
 import { observer } from 'mobx-react-lite';
 import { Json } from './models/JsonModel';
 
@@ -14,7 +16,13 @@ export type Props = {
 }
 
 const JsonEditor = observer(({ json, goBack } : Props) : JSX.Element => (
-  <>
+  <Box
+    display="flex"
+    justifyContent="center"
+    flexDirection="column"
+    width={500}
+    margin="auto"
+  >
     <Button variant="contained" color="primary" onClick={goBack}>
       Back
     </Button>
@@ -24,7 +32,8 @@ const JsonEditor = observer(({ json, goBack } : Props) : JSX.Element => (
         <input type="text" name={prop} value={row[prop]} onChange={(e) => json.updateProp(prop, e.target.value, index)} />
       </>
     )))}
-  </>
+    <Divider variant="middle" />
+  </Box>
 ));
 
 export default JsonEditor;

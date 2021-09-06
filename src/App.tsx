@@ -20,8 +20,6 @@ const App = ():JSX.Element => {
   if (isEmptyArray || isEmptyObject) {
     return (
       <>
-        {/* <h1>JSON upload</h1> */}
-        {/* <input type="file" onChange={handleUpload} /> */}
         <Button
           variant="contained"
           component="label"
