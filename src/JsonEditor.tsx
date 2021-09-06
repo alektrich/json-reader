@@ -26,13 +26,19 @@ const JsonEditor = observer(({ json, goBack } : Props) : JSX.Element => (
     <Button variant="contained" color="primary" onClick={goBack}>
       Back
     </Button>
-    {json.getData().map((row, index) => Object.keys(row).filter((prop) => prop !== 'id' && typeof row[prop] !== 'object').map((prop) => (
+    {json.getData().map((row, index) => (
       <>
-        <p>{`${prop} ==> ${row[prop]}`}</p>
-        <input type="text" name={prop} value={row[prop]} onChange={(e) => json.updateProp(prop, e.target.value, index)} />
+        {
+          Object.keys(row).filter((prop: string) => prop !== 'id' && typeof row[prop] !== 'object').map((prop: string) => (
+            <div key={prop}>
+              <p>{`${prop} ==> ${row[prop]}`}</p>
+              <input type="text" name={prop} value={row[prop]} onChange={(e) => json.updateProp(prop, e.target.value, index)} />
+            </div>
+          ))
+        }
+        <Divider variant="middle" />
       </>
-    )))}
-    <Divider variant="middle" />
+    ))}
   </Box>
 ));
 
