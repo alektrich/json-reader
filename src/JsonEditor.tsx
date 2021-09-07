@@ -1,11 +1,11 @@
-import React from 'react';
-import { v4 } from 'uuid';
+import React, { MouseEventHandler } from 'react';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Input from '@material-ui/core/Input';
 import Divider from '@material-ui/core/Divider';
 import { observer } from 'mobx-react-lite';
 import { Json } from './models/JsonModel';
+import getInputType from './utils/getInputType';
 
 export interface JsonModelClass {
   updateProp(name: string, value: string | number, index?: number): void;
@@ -14,7 +14,7 @@ export interface JsonModelClass {
 
 export type Props = {
   json: JsonModelClass,
-  goBack: any
+  goBack: MouseEventHandler
 }
 
 const JsonEditor = observer(({ json, goBack } : Props) : JSX.Element => (
@@ -29,17 +29,17 @@ const JsonEditor = observer(({ json, goBack } : Props) : JSX.Element => (
       Back
     </Button>
     {json.getData().map((row, index) => (
-      <>
+      <div key={row.uniqueId}>
         {
-          Object.keys(row).filter((prop: string) => prop !== 'id' && typeof row[prop] !== 'object').map((prop: string) => (
+          Object.keys(row).filter((prop: string) => prop !== 'uniqueId' && typeof row[prop] !== 'object').map((prop: string) => (
             <div key={prop}>
               <p>{`"${prop}": ${row[prop]}`}</p>
-              <Input type="text" name={prop} value={row[prop]} onChange={(e) => json.updateProp(prop, e.target.value, index)} />
+              <Input readOnly={prop === 'id'} type={getInputType(row[prop])} name={prop} value={row[prop]} onChange={(e) => json.updateProp(prop, e.target.value, index)} />
             </div>
           ))
         }
         <Divider variant="middle" style={{ marginTop: '20px' }} />
-      </>
+      </div>
     ))}
   </Box>
 ));

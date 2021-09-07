@@ -13,7 +13,7 @@ export default class JsonModel {
   }
 
   getData(): Json[] {
-    return this.json as Json[];
+    return (this.json as Json[]).map((row: Json, index: number) => ({ ...row, uniqueId: index }));
   }
 
   updateProp(name: string, value: string | number, index?: number): void {
